@@ -12,7 +12,7 @@ class User extends AppModel{
 
 
   public function passwordCheck(){
-    
+
   }
 
 
