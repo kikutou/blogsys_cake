@@ -28,7 +28,6 @@
   echo $this->Form->password('User.passconfirm');
   echo $this->Form->error('User.passconfirm');
 
-
   echo $this->Form->submit('signup');
 
   echo $this->Form->end();
