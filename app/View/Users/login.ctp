@@ -10,10 +10,9 @@
   echo $this->Form->password('User.password');
 
   echo $this->Form->submit('登録');
+  ?>
+  <input type ="button" value="新規" onclick="location.href='signup'">
+  <?php
   //echo $this->Form->button('新規'array('onclick' = 'location.href="signup.ctp"'));
   echo $this->Form->end();
-
-
-
-
 ?>
