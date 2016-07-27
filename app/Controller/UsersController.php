@@ -20,6 +20,7 @@
           $errorMsg = 'ユーザーが存在しません。';
         }
       }
+
       $this->set('errorMsg',$errorMsg);
     }
 
