@@ -2,8 +2,8 @@
 
 class FilesController extends AppController
 {
-    public $name = 'Files';
-    public $user = array('User','File');
+
+    public $use = array('User','File');
 
     public function index()
     {
@@ -20,26 +20,22 @@ class FilesController extends AppController
 
     public function contents()
     {
-        if($this->request->isget())
-        {
-            $file_id = $this->request->query['id'];
-            $result = $this->File->find(
-                'first',
-                array(
-                    'conditions'=>array(
-                        'File.id'=>$file_id
-                    )
+        $file_id = $this->request->query['id'];
+
+        $essay = $this->File->find(
+            'first',
+            array(
+                'conditions'=>array(
+                    'File.id'=>$file_id
                 )
-            );
-            $this->set('result',$result);
+            )
+        );
+
+        if(!$essay){
+            $this->redirect('index');
         }
-    }
 
-
-    //跳转页面的相对路径
-    public function localhost()
-    {
-        FilesController::localhost();
+        $this->set('result',$essay);
     }
 
 

@@ -8,21 +8,21 @@
   <?php
     if($result)
     {
-      for($i = 0;$i<count($result);$i++)
-      {
-        $array = $result[$i]['File'];
-        echo "<tr>";
-        echo "<td>" .$array['date']. "</td>";
-        echo "<td>" .$array['title']. "</td>";
-        //gai id
-       // echo "<td><a href=\"contents?id=" .$array['id']. "\">详细</a></td>";
-        echo "<td><a href=\"contents?id=" .$array['id']. "\">详细</a></td>";
-        echo "</tr>";
-      }
+        foreach ($result as $record){
+            $file = $record['File'];
+            echo "<tr>";
+            echo "<td>" .$file['date']. "</td>";
+            echo "<td>" .$file['title']. "</td>";
+            //gai id
+            // echo "<td><a href=\"contents?id=" .$array['id']. "\">详细</a></td>";
+            echo "<td><a href=\"contents?id=" .$file['id']. "\">详细</a></td>";
+            echo "</tr>";
+
+        }
     }
     else
     {
-      echo "文章がない";
+      echo "<tr><td colspan='3'>文章がない</td></tr>";
 
     }
  ?>
