@@ -24,6 +24,7 @@ class EssaysController extends AppController
                 )
             )
         );
+        
         $this->set('essays',$essays);
     }
 

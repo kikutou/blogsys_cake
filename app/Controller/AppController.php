@@ -31,4 +31,8 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+
+    //$componentsの配列に 'Session' を追加
+    public $components = array('Paginator', 'Session');
+
 }

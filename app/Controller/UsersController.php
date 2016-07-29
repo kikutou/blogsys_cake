@@ -1,8 +1,7 @@
 <?php
 class UsersController extends AppController
 {
-    //$componentsの配列に 'Session' を追加
-    public $components = array('Paginator', 'Session');
+    
 
     public function login()
     {
@@ -12,8 +11,7 @@ class UsersController extends AppController
             $result = $this->User->login($this->data);
             if($result)
             {
-                $user_id = $this->request->data['User']['id'];
-                exit(var_dump($user_id));
+                $user_id = $result['User']['id'];
 
                 $this -> Session-> write('userId', $user_id);
 

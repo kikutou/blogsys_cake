@@ -99,11 +99,7 @@ class User extends AppModel
             )
         );
 
-        if($user){
-            return true;
-        }else{
-            return false;
-        }
+        return $user;
 
     }
 
