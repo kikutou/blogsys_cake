@@ -57,11 +57,11 @@ class User extends AppModel
                 )
             )
         );
-        if($user){
-            return false;
-        }else{
-            return true;
-        }
+//        if($user){
+//            return false;
+//        }else{
+//            return true;
+//        }
     }
 
 

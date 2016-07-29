@@ -1,6 +1,6 @@
 <?php
 
-class File extends AppModel
+class Essay extends AppModel
  {
      public function index()
      {

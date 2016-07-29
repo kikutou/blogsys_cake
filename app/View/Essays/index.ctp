@@ -6,16 +6,16 @@
     <th>文章详细</th>
   </tr>
   <?php
-    if($result)
+    if($essays)
     {
-        foreach ($result as $record){
-            $file = $record['File'];
+        foreach ($essays as $record){
+            $essay = $record['Essay'];
             echo "<tr>";
-            echo "<td>" .$file['date']. "</td>";
-            echo "<td>" .$file['title']. "</td>";
+            echo "<td>" .$essay['date']. "</td>";
+            echo "<td>" .$essay['title']. "</td>";
             //gai id
             // echo "<td><a href=\"contents?id=" .$array['id']. "\">详细</a></td>";
-            echo "<td><a href=\"contents?id=" .$file['id']. "\">详细</a></td>";
+            echo "<td><a href=\"contents?id=" .$essay['id']. "\">详细</a></td>";
             echo "</tr>";
 
         }

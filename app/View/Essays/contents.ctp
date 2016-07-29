@@ -6,13 +6,13 @@
                 //exit(var_dump($result)); //debug方法
             {
                 echo "<tr>";
-                echo "<td>".$result['File']['date']."</td>";
+                echo "<td>".$result['Essay']['date']."</td>";
                 echo "</tr>";
                 echo "<tr>";
-                echo "<td>" .$result['File']["title"]. "</td>";
+                echo "<td>" .$result['Essay']["title"]. "</td>";
                 echo "</tr>";
                 echo "<tr>";
-                echo "<td>" .$result['File']["content"]. "</td>";
+                echo "<td>" .$result['Essay']["content"]. "</td>";
                 echo "</tr>";
             }
         ?>
