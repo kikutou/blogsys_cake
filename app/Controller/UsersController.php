@@ -1,7 +1,6 @@
 <?php
 class UsersController extends AppController
 {
-    
 
     public function login()
     {
@@ -43,9 +42,10 @@ class UsersController extends AppController
                         )
                     )
                 );
-                $user_id = $this->$user['User']['id'];
 
-                $this -> Session-> write('userId', $user_id);
+                $user_id = $user['User']['id'];
+
+                $this->Session->write('userId', $user_id);
 
                 $this->redirect('/essays/mypage');
             }

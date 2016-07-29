@@ -6,7 +6,7 @@
         'Essay.user_id',
         array(
             'type'=>'hidden',
-            'value'=>$this->Session->read('userId')
+            'value'=>$user_id
         )
     );
 

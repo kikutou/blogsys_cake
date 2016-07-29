@@ -32,6 +32,11 @@ class EssaysController extends AppController
     public function add()
     {
         $errorMsg = null;
+        $user_id = $this->Session->read('userId');
+        if(!$user_id){
+            $this->redirect('/users/login');
+        }
+        
         if ($this->request->ispost())
         {
             $result = $this->Essay->save($this->data);
@@ -45,6 +50,7 @@ class EssaysController extends AppController
             }
         }
 
+        $this->set('user_id',$user_id);
         $this->set('errorMsg', $errorMsg);
     }
 
