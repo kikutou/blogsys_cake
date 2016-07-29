@@ -35,6 +35,18 @@ class UsersController extends AppController
             $result = $this->User->save($this->data);
             if ($result)
             {
+                $user= $this->User->find(
+                    'first',
+                    array(
+                        'conditions'=>array(
+                            'User.name'=>$this->request->data['User']['name']
+                        )
+                    )
+                );
+                $user_id = $this->$user['User']['id'];
+
+                $this -> Session-> write('userId', $user_id);
+
                 $this->redirect('/essays/mypage');
             }
             else

@@ -29,6 +29,28 @@ class EssaysController extends AppController
     }
 
 
+    public function add()
+    {
+        $errorMsg = null;
+        if ($this->request->ispost())
+        {
+            $result = $this->Essay->save($this->data);
+            if ($result)
+            {
+                $this->redirect('mypage');
+            }
+            else
+            {
+                $errorMsg = 'データベースに保存できませんでした。';
+            }
+        }
+
+        $this->set('errorMsg', $errorMsg);
+    }
+
+
+
+
     public function contents()
     {
         $essay_id = $this->request->query['id'];
@@ -49,6 +71,29 @@ class EssaysController extends AppController
         $this->set('result',$essay);
     }
 
+
+
+    public function edit()
+    {
+        $essay_id = $this->request->query['id'];
+
+        $essay = $this->Essay->find(
+            'first',
+            array(
+                'conditions'=>array(
+                    'Essay.id'=>$essay_id
+                )
+            )
+        );
+
+        if(!$essay){
+            $this->redirect('index');
+        }
+
+        $this->set('result',$essay);
+
+
+    }
 
 
 
