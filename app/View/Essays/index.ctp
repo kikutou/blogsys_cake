@@ -26,5 +26,19 @@
 
     }
  ?>
-
 </table>
+
+<?php
+  if(isset($user))
+  {
+    echo "<input type = \"button\" onclick=\"history.go(-1)\" value=\"戻り\">";
+  }
+  else
+  {
+    echo "<input type = \"button\"  onclick = \"location.href='/blogsys/users/signup'\" value = \"サインアップ\">";
+    echo "<input type = \"button\"  onclick = \"location.href='/blogsys/users/login'\" value = \"ログイン\">";
+  }
+?>
+
+
+

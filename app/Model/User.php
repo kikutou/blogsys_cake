@@ -13,7 +13,7 @@ class User extends AppModel
             ),
             //この名前はすでに登録されたかどうかをチェックする。
             array(
-                'rule' => array('check_name'),
+                'rule' => 'isUnique',
                 'message' => 'この名前はすでに登録されました。'
             )
         ),
@@ -30,15 +30,34 @@ class User extends AppModel
             array(
                 'rule'=>array('passwordCheck'),
                 'message' =>'パスワード確認とパスワードが一致していません。'
-            ),
+            )
         ),
 
-        'sex' => array(
+        'gender' => array(
             array(
                 'rule' => 'notBlank',
+                'allowEmpty' => false,
                 'message' => '性別を選択してください。'
             )
+        ),
+
+        'blood' => array(
+            array(
+                'rule' => 'notBlank',
+                'allowEmpty' => false,
+                'message' => '性別を選択してください。'
+            )
+        ),
+
+
+        'birthday' => array(
+            array(
+                'rule' => array('date','ymd'),
+                'allowEmpty' => false,
+                'message' => '生年月日を選択してください。'
+            )
         )
+
     );
 
     /**
@@ -47,22 +66,22 @@ class User extends AppModel
      *
      * まず入力された名前をDBにあるかどうかをチェックする。
      */
-    public function check_name($data)
-    {
-        $user = $this->find(
-            'first',
-            array(
-                'conditions' => array(
-                    'User.name' => $data['name']
-                )
-            )
-        );
-        if($user){
-            return false;
-        }else{
-            return true;
-        }
-    }
+//    public function check_name($data)
+//    {
+//        $user = $this->find(
+//            'first',
+//            array(
+//                'conditions' => array(
+//                    'User.name' => $data['name']
+//                )
+//            )
+//        );
+//        if($user){
+//            return false;
+//        }else{
+//            return true;
+//        }
+//    }
 
 
     /**

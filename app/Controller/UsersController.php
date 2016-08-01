@@ -5,6 +5,14 @@ class UsersController extends AppController
     public function login()
     {
         $errorMsg=null;
+        //删除已有session
+        $from = $this->request->query['from'];
+        if($from && $from == 'logout')
+        {
+            $this->Session->destroy();
+        }
+
+
         if($this->request->ispost())
         {
             $result = $this->User->login($this->data);

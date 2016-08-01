@@ -18,13 +18,8 @@
     ?>
 </table>
 
-
-
-<!--    <a href="javascript:history.go(-1)">戻り</a>-->
-<div>
-    <a href="javascript:history.go(-1)">戻り</a>
-<!--    <input type = "button" value = "戻り" onclick = "location.href='history.go(-1)'">-->
-</div>
+<!--<a href="javascript:history.go(-1)">戻り</a>-->
+<input type = "button" value = "戻り" onclick = "history.go(-1)">
 
 
 
