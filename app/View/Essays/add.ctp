@@ -8,6 +8,7 @@
             'type'=>'hidden',
             'value'=>$user_id
         )
+
     );
 
     echo $this->Form->label('Essay.date','日付');
@@ -23,3 +24,4 @@
 
     echo $this->Form->end();
 ?>
+<input type = "button" onclick = "history.go(-1)" value = "キャンセル">

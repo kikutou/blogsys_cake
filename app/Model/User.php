@@ -1,15 +1,20 @@
 <?php
 class User extends AppModel
 {
+    public function beforSave()
+    {
+        $this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
+        return true;
+    }
 
     public $validate =array(
 
         'name' => array(
             //名前の長さをチェックする。
             array(
-                'rule' => array('between',1,30),
+                'rule' => array('between',1,20),
                 'allowEmpty' => false,
-                'message'=>'１−３０文字以内で入力してください。'
+                'message'=>'1−20文字以内で入力してください。'
             ),
             //この名前はすでに登録されたかどうかをチェックする。
             array(
@@ -17,6 +22,40 @@ class User extends AppModel
                 'message' => 'この名前はすでに登録されました。'
             )
         ),
+
+        'nation' => array(
+            //民族のチェックする。
+            array(
+                'rule' => array('between',1,20),
+                'allowEmpty' => true,
+                'message'=>'1−20文字以内で入力してください。'
+            )
+        ),
+
+        'blood' => array(
+            //血液型のチェックする。
+            array(
+                'rule' => 'notBlank',
+                'message' => '血液型を選択してください。'
+            )
+        ),
+
+        'gender' => array(
+            array(
+                'rule' => 'notBlank',
+                'message' => '性別を選択してください。'
+            )
+        ),
+
+        'hobby' => array(
+            array(
+                'rule' => array('between',1,45),
+                'allowEmpty' => true,
+                'message'=>'1−45文字以内で入力してください。'
+            )
+        ),
+
+
 
         'password' => array(
             array(
@@ -26,26 +65,11 @@ class User extends AppModel
             ),
         ),
 
+
         'passconfirm' => array(
             array(
                 'rule'=>array('passwordCheck'),
                 'message' =>'パスワード確認とパスワードが一致していません。'
-            )
-        ),
-
-        'gender' => array(
-            array(
-                'rule' => 'notBlank',
-                'allowEmpty' => false,
-                'message' => '性別を選択してください。'
-            )
-        ),
-
-        'blood' => array(
-            array(
-                'rule' => 'notBlank',
-                'allowEmpty' => false,
-                'message' => '性別を選択してください。'
             )
         ),
 
@@ -60,28 +84,6 @@ class User extends AppModel
 
     );
 
-    /**
-     * @param $data 名前のフィールドの値
-     * @return bool　チェックの結果
-     *
-     * まず入力された名前をDBにあるかどうかをチェックする。
-     */
-//    public function check_name($data)
-//    {
-//        $user = $this->find(
-//            'first',
-//            array(
-//                'conditions' => array(
-//                    'User.name' => $data['name']
-//                )
-//            )
-//        );
-//        if($user){
-//            return false;
-//        }else{
-//            return true;
-//        }
-//    }
 
 
     /**

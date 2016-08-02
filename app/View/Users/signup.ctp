@@ -1,8 +1,12 @@
 <?php
-  if($errorMsg){
-    echo $this->Html->para('errorMsg',$errorMsg);
-  }
-  echo $this->Form->create(false,array('type'=>'post'));
+//  if($errorMsg){
+//    echo $this->Html->para('errorMsg',$errorMsg);
+//  }
+
+if($this->Session->check('Message.auth'))
+  echo $this->Session->flash('auth');
+
+  echo $this->Form->create(false,array('type'=>'post','action'=>'mypage'));
   echo $this->Form->label('User.name','名前');
   echo $this->Form->text('User.name');
   echo $this->Form->error('User.name');
@@ -18,7 +22,8 @@
           '0'=>'A',
           '1'=>'B',
           '2'=>'AB',
-          '3'=>'HR'
+          '3'=>'0',
+          '4'=>'HR'
       ),
       array(
           'empty'=>'血液型をせんたくしてください'
@@ -26,9 +31,12 @@
   );
   echo $this->Form->error('User.blood');
 
-  echo $this->Form->label('User.birthday','日期');
-  echo $this->Form->dateTime('User.birthday','YMD');
-  echo $this->Form->error('User.birthday','YMD');
+  echo $this->Form->label('User.birthday','生年月日');
+
+  echo $this->Form->year('User.birthday',1900, date('Y'),array('empty' => '----','required'=>''));
+  echo $this->Form->month('User.birthday', array('monthNames' => false, 'empty' => '----','required'=>''));
+  echo $this->Form->day('User.birthday', array('empty' => '----','required'=>''));
+  echo $this->Form->error('User.birthday');
 
   echo $this->Form->label('User.hobby','興味');
   echo $this->Form->text('User.hobby');
