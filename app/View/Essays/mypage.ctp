@@ -10,27 +10,6 @@
             echo "</tr>";
 
             echo "<tr>";
-            echo "<td>民族：</td>";
-            echo "<td>" .$user['User']['nation']. "</td>";
-            echo "</tr>";
-
-//            echo "<tr>";
-//            echo "<td>血液型：</td>";
-//            echo "<td>" ;
-//            $user_blood = $user['User']['blood'];
-//            if($user_blood)
-//            {
-//
-//            }
-//            echo "</td>";
-//            echo "</tr>";
-
-            echo "<tr>";
-            echo "<td>興味：</td>";
-            echo "<td>" .$user['User']['hobby']. "</td>";
-            echo "</tr>";
-
-            echo "<tr>";
             echo "<td>性別：</td>";
             echo "<td>";
             $user_gender = $user['User']['gender'];
@@ -42,6 +21,46 @@
                 echo "女";
             }
             echo "</td>";
+            echo "</tr>";
+
+            echo "<tr>";
+            echo "<td>民族：</td>";
+            echo "<td>" .$user['User']['nation']. "</td>";
+            echo "</tr>";
+
+            echo "<tr>";
+            echo "<td>興味：</td>";
+            echo "<td>" .$user['User']['hobby']. "</td>";
+            echo "</tr>";
+
+            echo "<tr>";
+            echo "<td>血液型：</td>";
+            $user_blood = array(
+                '0'=>'A',
+                '1'=>'B',
+                '2'=>'AB',
+                '3'=>'0',
+                '4'=>'HR'
+            );
+            if($user['User']['blood'] == "")
+            {
+                echo "<td>血液型ない</td>";
+            }
+            else
+                {
+                    foreach ($user_blood as $key=>$value)
+                    {
+                        if($user['User']['blood'] == $key && $user['User']['blood'] !== null )
+                        {
+                            echo "<td>" .$value. "</td>";
+                        }
+                    }
+                }
+            echo "</tr>";
+
+            echo "<tr>";
+            echo "<td>生年月日：</td>";
+            echo "<td>" .$user['User']['birthday']. "</td>";
             echo "</tr>";
         }
     ?>

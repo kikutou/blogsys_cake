@@ -4,6 +4,16 @@ class EssaysController extends AppController
 {
 
     public $uses = array('User','Essay');
+    public $components = array('Auth');
+
+
+
+
+    public function beforeFilter()
+    {
+        $this->Auth->allow('index');
+    }
+
 
 
     public function index()
@@ -25,33 +35,30 @@ class EssaysController extends AppController
     public function mypage()
     {
         //判断是否登录
-        $user_id = $this->Session->read('userId');
-        if($user_id)
-        {
-            $essays = $this->Essay->find(
-                'all',
-                array(
-                    'conditions'=>array(
-                        'Essay.user_id'=>$user_id
-                    )
-                )
-            );
+//        $user_id = $this->Session->read('userId');
+//        if(!$user_id){
+//            $this->redirect('/users/login');
+//        }
 
-            $user = $this->User->find(
-                'first',
-                array(
-                    'conditions'=>array(
-                        'User.id'=>$user_id
-                    )
+        $essays = $this->Essay->find(
+            'all',
+            array(
+                'conditions'=>array(
+                    'Essay.user_id'=>$user_id
                 )
-            );
+            )
+        );
+
+        $user = $this->User->find(
+            'first',
+            array(
+                'conditions'=>array(
+                    'User.id'=>$user_id
+                )
+            )
+        );
             $this->set('user',$user);
             $this->set('essays',$essays);
-        }
-        else
-        {
-            $this->redirect('/users/login');
-        }
     }
 
 
@@ -59,10 +66,10 @@ class EssaysController extends AppController
     public function add()
     {
         //判断是否登录
-        $user_id = $this->Session->read('userId');
-        if(!$user_id){
-            $this->redirect('/users/login');
-        }
+//        $user_id = $this->Session->read('userId');
+//        if(!$user_id){
+//            $this->redirect('/users/login');
+//        }
 
         $errorMsg = null;
         if ($this->request->ispost())
@@ -78,6 +85,7 @@ class EssaysController extends AppController
             }
         }
         $this->set('user_id',$user_id);
+
         $this->set('errorMsg', $errorMsg);
     }
 
@@ -86,11 +94,11 @@ class EssaysController extends AppController
     public function delete()
     {
         //判断是否登录
-        $user_id = $this->Session->read('userId');
-        if(!$user_id)
-        {
-            $this->redirect('/users/login');
-        }
+//        $user_id = $this->Session->read('userId');
+//        if(!$user_id)
+//        {
+//            $this->redirect('/users/login');
+//        }
 
         $errorMsg = null;
         $essay_id = $this->request->query['id'];
@@ -132,11 +140,11 @@ class EssaysController extends AppController
     public function edit()
     {
         //判断是否登录
-        $user_id = $this->Session->read('userId');
-        if(!$user_id)
-        {
-            $this->redirect('/users/login');
-        }
+//        $user_id = $this->Session->read('userId');
+//        if(!$user_id)
+//        {
+//            $this->redirect('/users/login');
+//        }
 
         $errorMsg = null;
         $essay_id = $this->request->query['id'];
@@ -175,11 +183,11 @@ class EssaysController extends AppController
     public function contents()
     {
         //判断是否登录
-        $user_id = $this->Session->read('userId');
-        if(!$user_id)
-        {
-            $this->redirect('/users/login');
-        }
+//        $user_id = $this->Session->read('userId');
+//        if(!$user_id)
+//        {
+//            $this->redirect('/users/login');
+//        }
 
         $essay_id = $this->request->query['id'];
         $essay = $this->Essay->find(
@@ -197,11 +205,6 @@ class EssaysController extends AppController
 
         $this->set('result',$essay);
     }
-
-
-
-
-
 
 }
 
