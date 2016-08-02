@@ -128,7 +128,6 @@ class EssaysController extends AppController
     }
 
 
-
     public function edit()
     {
         //判断是否登录
