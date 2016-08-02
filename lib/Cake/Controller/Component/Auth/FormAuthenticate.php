@@ -66,6 +66,7 @@ class FormAuthenticate extends BaseAuthenticate {
  * @return mixed False on login failure. An array of User data on success.
  */
 	public function authenticate(CakeRequest $request, CakeResponse $response) {
+
 		$userModel = $this->settings['userModel'];
 		list(, $model) = pluginSplit($userModel);
 
@@ -73,6 +74,7 @@ class FormAuthenticate extends BaseAuthenticate {
 		if (!$this->_checkFields($request, $model, $fields)) {
 			return false;
 		}
+
 		return $this->_findUser(
 			$request->data[$model][$fields['username']],
 			$request->data[$model][$fields['password']]

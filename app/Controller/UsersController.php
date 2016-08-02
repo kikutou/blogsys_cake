@@ -2,9 +2,6 @@
 class UsersController extends AppController
 {
 
-    public $components = array('Auth');
-
-
 
     public function beforeFilter()
     {
@@ -50,6 +47,7 @@ class UsersController extends AppController
 
 
 
+    //②loginを用意する。
     public function login()
     {
         if($this->request->ispost())
@@ -65,6 +63,12 @@ class UsersController extends AppController
         }
     }
 
+    //③logoutを用意する。
+    public function logout()
+    {
+        $this->Auth->logout();
+    }
+
 
 
     public function signup()
@@ -73,12 +77,13 @@ class UsersController extends AppController
         {
             if($this->data)
             {
-                $this->User->create();
                 $this->User->save($this->data);
-                $this->redirect(array('action'=>'mypage'));
+                $this->redirect(array('action'=>'login'));
             }
         }
     }
+    
+    
 
 
 

@@ -6,7 +6,7 @@
 if($this->Session->check('Message.auth'))
   echo $this->Session->flash('auth');
 
-  echo $this->Form->create(false,array('type'=>'post','action'=>'mypage'));
+  echo $this->Form->create('User', array('type'=>'post','url'=>'signup'));
   echo $this->Form->label('User.name','名前');
   echo $this->Form->text('User.name');
   echo $this->Form->error('User.name');

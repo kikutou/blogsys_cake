@@ -1,7 +1,7 @@
 <?php
 class User extends AppModel
 {
-    public function beforSave()
+    public function beforeSave($options = null)
     {
         $this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
         return true;

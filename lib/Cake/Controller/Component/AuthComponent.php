@@ -616,6 +616,7 @@ class AuthComponent extends Component {
 			$event = new CakeEvent('Auth.afterIdentify', $this, array('user' => $user));
 			$this->_Collection->getController()->getEventManager()->dispatch($event);
 		}
+
 		return (bool)$this->user();
 	}
 
@@ -759,6 +760,7 @@ class AuthComponent extends Component {
  * @return array User record data, or false, if the user could not be identified.
  */
 	public function identify(CakeRequest $request, CakeResponse $response) {
+
 		if (empty($this->_authenticateObjects)) {
 			$this->constructAuthenticate();
 		}

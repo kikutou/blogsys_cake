@@ -101,6 +101,7 @@ abstract class BaseAuthenticate implements CakeEventListener {
  * @return bool|array Either false on failure, or an array of user data.
  */
 	protected function _findUser($username, $password = null) {
+
 		$userModel = $this->settings['userModel'];
 		list(, $model) = pluginSplit($userModel);
 		$fields = $this->settings['fields'];
@@ -142,6 +143,7 @@ abstract class BaseAuthenticate implements CakeEventListener {
 		}
 
 		unset($result[$model]);
+
 		return array_merge($user, $result);
 	}
 

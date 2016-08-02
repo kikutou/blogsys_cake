@@ -4,14 +4,10 @@ class EssaysController extends AppController
 {
 
     public $uses = array('User','Essay');
-    public $components = array('Auth');
-
-
-
 
     public function beforeFilter()
     {
-        $this->Auth->allow('index');
+        //$this->Auth->allow('index');
     }
 
 
@@ -35,10 +31,10 @@ class EssaysController extends AppController
     public function mypage()
     {
         //判断是否登录
-//        $user_id = $this->Session->read('userId');
-//        if(!$user_id){
-//            $this->redirect('/users/login');
-//        }
+        $user_id = $this->Session->read('userId');
+        if(!$user_id){
+         $this->redirect('/users/login');
+        }
 
         $essays = $this->Essay->find(
             'all',

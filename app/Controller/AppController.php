@@ -33,6 +33,22 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 
     //$componentsの配列に 'Session' を追加
-    public $components = array('Paginator', 'Session');
+    public $components = array('Paginator', 'Session',
+        'Auth' => array(
+            'authError' => 'まずログインしてください。',
+            'loginError' => 'ログインが失敗しました。',
+            'authenticate' => array(
+                'Form' => array(
+                    'fields' => array(
+                        'username' => 'name',
+                    ),
+                )
+            ),
+            'loginAction' => array(
+                'controller' => 'essays',
+                'action' => 'mypage',
+            )
+        )
+    );
 
 }
