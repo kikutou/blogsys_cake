@@ -1,48 +1,58 @@
 <?php
-    echo $this->Form->create(false,array('type'=>'post'));
 
-    //获得文章ID
-    echo $this->Form->text(
-        'Essay.id',
-        array(
-            'type'=>'hidden',
-            'value'=>$result['Essay']['id']
-        )
-    );
+    if($errorMsg)
+    {
+        echo $errorMsg;
+    }
 
+    else
+    {
+        echo $this->Form->create(false,array('type'=>'post'));
+        //获得文章ID
+        echo $this->Form->text(
+            'Essay.id',
+            array(
+                'type'=>'hidden',
+                'value'=>$result['Essay']['id']
+            )
+        );
+        //获取ユーザーID
+        echo $this->Form->text(
+            'Essay.user_id',
+            array(
+                'type'=>'hidden',
+                'value'=>$result['Essay']['user_id']
+            )
+        );
+        echo $this->Form->label('Essay.date','日付');
+        echo $this->Form->text('Essay.date',array('value'=>date("Y-m-d")));
 
-    //获取ユーザーID
-    echo $this->Form->text(
-        'Essay.user_id',
-        array(
-            'type'=>'hidden',
-            'value'=>$this->Session->read('userId')
-        )
-    );
+        echo $this->Form->label('Essay.title','タイトル');
+        echo $this->Form->text(
+            'Essay.title',
+            array(
+                'value'=>$result['Essay']['title']
+            )
+        );
+        echo $this->Form->error('Essay.title');
 
-    echo $this->Form->label('Essay.date','日付');
-    echo $this->Form->text('Essay.date',array('value'=>date("Y-m-d")));
+        echo $this->Form->label('Essay.content','コンテンツ');
+        echo $this->Form->text(
+            'Essay.content',
+            array(
+                'value'=>$result['Essay']['content']
+            )
+        );
+        echo $this->Form->error('Essay.content');
 
-    echo $this->Form->label('Essay.title','タイトル');
-    echo $this->Form->text(
-        'Essay.title',
-        array(
-        'value'=>$result['Essay']['title']
-        )
-    );
+        echo $this->Form->submit('確認');
 
-    echo $this->Form->label('Essay.content','コンテンツ');
-    echo $this->Form->text(
-        'Essay.content',
-        array(
-            'value'=>$result['Essay']['content']
-        )
-    );
-
-    echo $this->Form->submit('確認');
-
-    echo $this->Form->end();
+        echo $this->Form->end();
+        echo "<input type=\"button\" onclick=\"history.go(-1)\" value=\"キャンセル\">";
+    }
 ?>
 
-<input type="button" onclick="history.go(-1)" value="キャンセル">
+
+
+<input type="button" onclick="history.go(-1)" value="戻り">
 

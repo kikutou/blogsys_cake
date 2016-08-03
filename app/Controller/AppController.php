@@ -45,6 +45,10 @@ class AppController extends Controller {
                 )
             ),
             'loginAction' => array(
+                'controller' => 'users',
+                'action' => 'login',
+            ),
+            'loginRedirect' => array(
                 'controller' => 'essays',
                 'action' => 'mypage',
             )

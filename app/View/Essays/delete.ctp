@@ -31,13 +31,13 @@ echo $this->Form->text(
 
 
 //获取ユーザーID
-echo $this->Form->text(
-    'Essay.user_id',
-    array(
-        'type'=>'hidden',
-        'value'=>$this->Session->read('userId')
-    )
-);
+//echo $this->Form->text(
+//    'Essay.user_id',
+//    array(
+//        'type'=>'hidden',
+//        'value'=>$result['Essay']['user_id']
+//    )
+//);
 
 
 

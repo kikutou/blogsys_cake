@@ -7,7 +7,7 @@ class EssaysController extends AppController
 
     public function beforeFilter()
     {
-        //$this->Auth->allow('index');
+       $this->Auth->allow('index');
     }
 
 
@@ -17,12 +17,17 @@ class EssaysController extends AppController
         $essays = $this->Essay->find('all');
         $this->set('essays',$essays);
 
-        $user_id = $this->Session->read('userId');
-
-        if($user_id)
+        if($this->Auth->user('id'))
         {
-            $this->set('user','$user_id');
+            $this->set('user','$this->Auth->user(\'id\')');
         }
+//
+//        $user_id = $this->Auth>user('id');
+//
+//        if($user_id)
+//        {
+//            $this->set('user','$user_id');
+//        }
 
     }
 
@@ -30,17 +35,17 @@ class EssaysController extends AppController
 
     public function mypage()
     {
-        //判断是否登录
-        $user_id = $this->Session->read('userId');
-        if(!$user_id){
-         $this->redirect('/users/login');
-        }
+//        //判断是否登录
+//        $user_id = $this->Session->read('userId');
+//        if(!$user_id){
+//         $this->redirect('/users/login');
+//        }
 
         $essays = $this->Essay->find(
             'all',
             array(
                 'conditions'=>array(
-                    'Essay.user_id'=>$user_id
+                    'Essay.user_id'=>$this->Auth->user('id')
                 )
             )
         );
@@ -49,7 +54,7 @@ class EssaysController extends AppController
             'first',
             array(
                 'conditions'=>array(
-                    'User.id'=>$user_id
+                    'User.id'=>$this->Auth->user('id')
                 )
             )
         );
@@ -80,7 +85,7 @@ class EssaysController extends AppController
                 $errorMsg = 'データベースに保存できませんでした。';
             }
         }
-        $this->set('user_id',$user_id);
+        $this->set('user_id',$this->Auth->user('id'));
 
         $this->set('errorMsg', $errorMsg);
     }
@@ -117,7 +122,7 @@ class EssaysController extends AppController
         {
             $essay_id = $this->request->data['Essay']['id'];
             $result = $this->Essay->delete($essay_id);
-            if ($result)
+            if (isset($result))
             {
                 $this->redirect('mypage');
             }
@@ -134,12 +139,6 @@ class EssaysController extends AppController
 
     public function edit()
     {
-        //判断是否登录
-//        $user_id = $this->Session->read('userId');
-//        if(!$user_id)
-//        {
-//            $this->redirect('/users/login');
-//        }
 
         $errorMsg = null;
         $essay_id = $this->request->query['id'];
@@ -156,6 +155,11 @@ class EssaysController extends AppController
         if($essay){
             $this->set('result',$essay);
         }
+        else
+            {
+                $errorMsg = "文章を選んでください。";
+                $this->set('errorMsg','$errorMsg');
+            }
         //判定前台表单传值方式为post，有id字段，数据更新。
         if ($this->request->ispost())
         {
@@ -177,29 +181,27 @@ class EssaysController extends AppController
 
     public function contents()
     {
-        //判断是否登录
-//        $user_id = $this->Session->read('userId');
-//        if(!$user_id)
-//        {
-//            $this->redirect('/users/login');
-//        }
-
-        $essay_id = $this->request->query['id'];
-        $essay = $this->Essay->find(
-            'first',
-            array(
-                'conditions'=>array(
-                    'Essay.id'=>$essay_id
-                )
-            )
-        );
-
-        if(!$essay){
-            $this->redirect('index');
+        $errorMsg = null;
+        if(!isset($this->request->query['id']))
+        {
+            $errorMsg = "ddd";
+            $this->set('errorMsg',$errorMsg);
         }
-
-        $this->set('result',$essay);
+        else
+        {
+            $essay_id = $this->request->query['id'];
+            $essay = $this->Essay->find(
+                'first',
+                array(
+                    'conditions'=>array(
+                        'Essay.id'=>$essay_id
+                    )
+                )
+            );
+            $this->set('result',$essay);
+        }
     }
+
 
 }
 

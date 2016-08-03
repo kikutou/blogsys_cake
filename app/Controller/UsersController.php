@@ -10,8 +10,6 @@ class UsersController extends AppController
     }
 
 
-
-
 //    public function login()
 //    {
 //        $errorMsg=null;
@@ -44,9 +42,6 @@ class UsersController extends AppController
 //        $this->set('errorMsg',$errorMsg);
 //    }
 
-
-
-
     //②loginを用意する。
     public function login()
     {
@@ -54,7 +49,10 @@ class UsersController extends AppController
         {
             if($this->Auth->login())
             {
+                //登录后跳到先前访问页面
                 $this->redirect($this->Auth->redirect());
+                //登录后跳到mypage页
+                //$this->redirect('/essays/mypage');
             }
             else
             {
@@ -62,6 +60,9 @@ class UsersController extends AppController
             }
         }
     }
+
+
+
 
     //③logoutを用意する。
     public function logout()
@@ -82,15 +83,6 @@ class UsersController extends AppController
             }
         }
     }
-    
-    
-
-
-
-
-
-
-
 
 //    public function signup()
 //    {

@@ -31,7 +31,7 @@
 <?php
   if(isset($user))
   {
-    echo "<input type = \"button\" onclick=\"history.go(-1)\" value=\"戻り\">";
+    echo "<input type = \"button\" onclick=\"location.href='mypage'\" value=\"mypage\">";
   }
   else
   {

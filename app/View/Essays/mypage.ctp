@@ -110,7 +110,7 @@
             <input type = "button" value = "文章一覧" onclick = "location.href='index'">
         </td>
         <td>
-            <input type = "button" value = "ログアウト" onclick = "location.href='/blogsys/users/login?from=logout'">
+            <input type = "button" value = "ログアウト" onclick = "location.href='/blogsys/users/logout'">
         </td>
     </tr>
 

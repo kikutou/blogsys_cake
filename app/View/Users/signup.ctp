@@ -43,7 +43,7 @@ if($this->Session->check('Message.auth'))
   echo $this->Form->error('User.hobby');
 
   echo $this->Form->radio('User.gender',array('0'=> "男",'1' => "女"),array('legend'=>"性別選択"));
-  echo $this->Form->error('User.sex');
+  echo $this->Form->error('User.gender');
 
   echo $this->Form->label('User.password','パスワード');
   echo $this->Form->password('User.password');

@@ -9,9 +9,15 @@ class Essay extends AppModel
             array(
                 'rule' => array('between',1,20),
                 'allowEmpty' => false,
-                'message'=>'１−20文字以内で入力してください。'
+                'message' => '１−20文字以内で入力してください。'
             ),
         ),
+        'content' => array(
+            array(
+                'rule' => 'notBlank',
+                'message' => '1-21845文字以内を入力してください。'
+            )
+        )
     );
 
 
