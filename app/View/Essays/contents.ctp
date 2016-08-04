@@ -2,7 +2,7 @@
 
 <table border="1">
     <?php
-        if($errorMsg)
+        if(isset($errorMsg))
         {
             echo $errorMsg;
         }

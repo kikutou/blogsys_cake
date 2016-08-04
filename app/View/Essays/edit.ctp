@@ -48,7 +48,6 @@
         echo $this->Form->submit('確認');
 
         echo $this->Form->end();
-        echo "<input type=\"button\" onclick=\"history.go(-1)\" value=\"キャンセル\">";
     }
 ?>
 

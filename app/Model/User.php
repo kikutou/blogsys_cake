@@ -77,11 +77,9 @@ class User extends AppModel
         'birthday' => array(
             array(
                 'rule' => array('date','ymd'),
-                'allowEmpty' => false,
                 'message' => '生年月日を選択してください。'
             )
         )
-
     );
 
 
@@ -97,32 +95,34 @@ class User extends AppModel
         return $this->data['User']['password'] == $data['passconfirm'];
     }
 
+
+
     /**
      * @param $data
      * @return bool
      *
      * ログイン機能
      */
-    public function login($data)
-    {
-        //入力領域が空の場合、ログイン失敗
-        if(!$data['User']['name'] || !$data['User']['password']){
-            return false;
-        }
-
-        $user = $this->find(
-            'first',
-            array(
-                'conditions' => array(
-                    'User.name' => $data['User']['name'],
-                    'User.password' => $data['User']['password']
-                )
-            )
-        );
-
-        return $user;
-
-    }
+//    public function login($data)
+//    {
+//        //入力領域が空の場合、ログイン失敗
+//        if(!$data['User']['name'] || !$data['User']['password']){
+//            return false;
+//        }
+//
+//        $user = $this->find(
+//            'first',
+//            array(
+//                'conditions' => array(
+//                    'User.name' => $data['User']['name'],
+//                    'User.password' => $data['User']['password']
+//                )
+//            )
+//        );
+//
+//        return $user;
+//
+//    }
 
 
 }

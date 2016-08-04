@@ -1,7 +1,4 @@
 <?php
-//  if($errorMsg){
-//    echo $this->Html->para('errorMsg',$errorMsg);
-//  }
 
 if($this->Session->check('Message.auth'))
   echo $this->Session->flash('auth');
@@ -34,8 +31,8 @@ if($this->Session->check('Message.auth'))
   echo $this->Form->label('User.birthday','生年月日');
 
   echo $this->Form->year('User.birthday',1900, date('Y'),array('empty' => '----','required'=>''));
-  echo $this->Form->month('User.birthday', array('monthNames' => false, 'empty' => '----','required'=>''));
-  echo $this->Form->day('User.birthday', array('empty' => '----','required'=>''));
+  echo $this->Form->month('User.birthday', array('monthNames' => false, 'empty' => '--','required'=>''));
+  echo $this->Form->day('User.birthday', array('empty' => '--','required'=>''));
   echo $this->Form->error('User.birthday');
 
   echo $this->Form->label('User.hobby','興味');

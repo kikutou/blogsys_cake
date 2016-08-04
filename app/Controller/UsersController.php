@@ -10,37 +10,30 @@ class UsersController extends AppController
     }
 
 
-//    public function login()
-//    {
-//        $errorMsg=null;
-//        //删除已有session
-//        if(isset($this->request->query['from'])){
-//            $from = $this->request->query['from'];
-//            if($from == 'logout')
-//            {
-//                $this->Session->destroy();
-//            }
-//        }
-//
-//
-//        if($this->request->ispost())
-//        {
-//            $result = $this->User->login($this->data);
-//            if($result)
-//            {
-//                $user_id = $result['User']['id'];
-//
-//                $this -> Session-> write('userId', $user_id);
-//
-//                $this->redirect('/essays/mypage');
-//            }
-//            else
-//            {
-//                $errorMsg = 'ユーザーが存在しません。';
-//            }
-//        }
-//        $this->set('errorMsg',$errorMsg);
-//    }
+
+    //①signupを用意する。
+    public function signup()
+    {
+        if ($this->request->ispost())
+        {
+            $result = $this->User->save($this->data);
+            if($result)
+            {
+                //保存したデータで登録する。
+                $this->Auth->login();
+                //$this->redirect(array('action'=>'login'));
+                $this->redirect('/essays/mypage');
+            }
+            else
+            {
+                $errorMsg = 'データベースに保存できませんでした。';
+            }
+            $this->set('errorMsg', $errorMsg);
+        }
+    }
+
+
+
 
     //②loginを用意する。
     public function login()
@@ -72,17 +65,14 @@ class UsersController extends AppController
 
 
 
-    public function signup()
-    {
-        if ($this->request->ispost())
-        {
-            if($this->data)
-            {
-                $this->User->save($this->data);
-                $this->redirect(array('action'=>'login'));
-            }
-        }
-    }
+
+
+
+
+
+
+
+
 
 //    public function signup()
 //    {
@@ -115,6 +105,40 @@ class UsersController extends AppController
 //
 //        $this->set('errorMsg', $errorMsg);
 //    }
+
+
+//    public function login()
+//    {
+//        $errorMsg=null;
+//        //删除已有session
+//        if(isset($this->request->query['from'])){
+//            $from = $this->request->query['from'];
+//            if($from == 'logout')
+//            {
+//                $this->Session->destroy();
+//            }
+//        }
+//
+//
+//        if($this->request->ispost())
+//        {
+//            $result = $this->User->login($this->data);
+//            if($result)
+//            {
+//                $user_id = $result['User']['id'];
+//
+//                $this -> Session-> write('userId', $user_id);
+//
+//                $this->redirect('/essays/mypage');
+//            }
+//            else
+//            {
+//                $errorMsg = 'ユーザーが存在しません。';
+//            }
+//        }
+//        $this->set('errorMsg',$errorMsg);
+//    }
+
 
 
 }
