@@ -3,7 +3,7 @@
 class EssaysController extends AppController
 {
 
-    public $uses = array('User','Essay');
+    public $uses = array('User','Essay','Comment');
 
     public function beforeFilter()
     {

@@ -1,9 +1,10 @@
 <h1>文章の一覧</h1>
 <table>
   <tr>
-    <th>发表时间</th>
-    <th>文章标题</th>
-    <th>文章详细</th>
+      <th>发表时间</th>
+      <th>文章标题</th>
+      <th>文章详细</th>
+      <th>文章评论</th>
   </tr>
   <?php
     if($essays)
@@ -16,6 +17,8 @@
             //gai id
             // echo "<td><a href=\"contents?id=" .$array['id']. "\">详细</a></td>";
             echo "<td><a href=\"contents?id=" .$essay['id']. "\">详细</a></td>";
+            echo "<td><a href=\"/blogsys/comments/comm?id=" .$essay['id']. "\">评论</a></td>";
+
             echo "</tr>";
 
         }
