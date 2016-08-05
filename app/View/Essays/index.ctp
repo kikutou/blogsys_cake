@@ -17,7 +17,7 @@
             //gai id
             // echo "<td><a href=\"contents?id=" .$array['id']. "\">详细</a></td>";
             echo "<td><a href=\"contents?id=" .$essay['id']. "\">详细</a></td>";
-            echo "<td><a href=\"/blogsys/comments/comm?id=" .$essay['id']. "\">评论</a></td>";
+            echo "<td><a href=\"".$this->Html->url('/comments/comm')."?essay_id=" .$essay['id']. "\">评论</a></td>";
 
             echo "</tr>";
 
