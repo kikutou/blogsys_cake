@@ -1,10 +1,4 @@
-<html>
-<head>
-    <title>My Page</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-</head>
 
-<body>
 <h1>自己紹介</h1>
 
 <table border = "1">
@@ -97,7 +91,7 @@
             echo "<td><a href=\"contents?id=" .$essay['id']. "\">详细</a></td>";
             echo "<td><a href=\"edit?id=" .$essay['id']. "\">编辑</a></td>";
             //echo "<td><a href=\"delete?id=" .$essay['id']. "\">削除</a></td>";
-            echo "<td><a href='javascript::' class='del' onclick='data_del()' >削除<span hidden>" .$essay['id']. "</span></a></td>";
+            echo "<td><a href='javascript::' class='del'>削除<span hidden>" .$essay['id']. "</span></a></td>";
 
             echo "</tr>";
         }
@@ -126,32 +120,28 @@
 
 
 
-</body>
-
-
-
-
 <script>
     $(function () {
         $(".del").click(function () {
             var essay_id = $(this).text().replace("削除", "");
-            var id = {id: essay_id};
-            alert(essay_id);
-            id = JSON.stringify(id);
             if (window.confirm('文章を削除しすか？')){
-
                 $.ajax({
-                    url: 'delete',
+                    url: 'ajax_delete',
                     type: 'post',
-                    data: {Essay: id},
-                    dataType: 'json',
+                    data: {id: essay_id},
+                    dataType: 'text',
                     success: function (result) {
-//                        alert(result);
-                        alert('delete success')
+                        result = JSON.parse(result);
+                        if(result['response_code'] == 1){
+                            alert(result['message']);
+                            location.reload();
+                        }else{
+                            alert(result['message']);
+                        }
+
                     },
                     error: function (error) {
-                        alert(error.status);
-                        alert('ajax error')
+                        alert('ajax error');
                     }
                 })
             }
@@ -160,7 +150,7 @@
 
 </script>
 
-</html>
+
 
 
 

@@ -4,7 +4,7 @@ class EssaysController extends AppController
 {
 
     public $uses = array('User','Essay','Comment');
-    public $layout = false;
+    //public $layout = false;
     public function beforeFilter()
     {
        $this->Auth->allow('index');
@@ -78,8 +78,40 @@ class EssaysController extends AppController
     }
 
 
+    public function ajax_delete()
+    {
+        $this->autoRender = false;
 
-    public function delete()
+        $ajax_response = array(
+            'response_code' => 2,
+            'message' => '失敗しました。'
+        );
+
+        if($this->request->is('ajax')) {
+            $essay_id = $this->data['id'];
+
+            $this->Essay->id = $essay_id;
+            $result = $this->Essay->saveField('delete_flag','1');
+
+            if ($result)
+            {
+                $ajax_response['response_code'] = 1;
+                $ajax_response['message'] = '削除は成功しました。';
+            }else{
+                $ajax_response['response_code'] = 4;
+                $ajax_response['message'] = 'DBにエラーが発生しました。';
+            }
+        }else{
+            $ajax_response['response_code'] = 3;
+            $ajax_response['message'] = 'ajaxの形式ではありません。';
+        }
+
+        return json_encode($ajax_response);
+
+    }
+
+
+/*    public function delete()
     {
         $errorMsg = null;
         $essay_id = $this->request->query['id'];
@@ -128,7 +160,7 @@ class EssaysController extends AppController
         $this->set('errorMsg', $errorMsg);
 
 
-    }
+    }*/
 
 
     public function edit()
