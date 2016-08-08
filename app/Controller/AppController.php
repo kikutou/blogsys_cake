@@ -39,6 +39,9 @@ class AppController extends Controller {
             'loginError' => 'ログインが失敗しました。',
             'authenticate' => array(
                 'Form' => array(
+                    'scope' => array(
+                        'User.delete_flag' => 0
+                    ),
                     'fields' => array(
                         'username' => 'name',
                     ),

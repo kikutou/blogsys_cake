@@ -49,10 +49,36 @@ class UsersController extends AppController
             }
             else
             {
-                $this->Session->setFlash('ユーザー名かパスワードが違います。','default',array(),'auth');
+                $user_delete_flag = $this->User->field(
+                    'delete_flag',
+                    array(
+                        'name'=>$this->data['User']['name']
+                    )
+                );
+                if($user_delete_flag != 0)
+                {
+                    $this->Session->setFlash(
+                        'ユーザーがいません。',
+                        'default',
+                        array(),
+                        'auth'
+                    );
+                }
+                else
+                    {
+                        $this->Session->setFlash(
+                            'ユーザー名かパスワードが違います。',
+                            'default',array(),
+                            'auth'
+                        );
+                    }
             }
         }
     }
+
+
+
+
 
 
 

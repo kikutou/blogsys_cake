@@ -73,13 +73,12 @@ class CommentsController extends AppController
     {
         $errorMsg = null;
         //在session中保存essay_id
-        $essay_id = $this->request->query['essay_id'];
+        $essay_id = $this->request->query['id'];
 
         if(!$essay_id)
         {
             $this->redirect('/essays/mypage');
         }
-
         $essay = $this->Essay->find(
             'first',
             array(
@@ -88,7 +87,6 @@ class CommentsController extends AppController
                 )
             )
         );
-
         $comments = $this->Comment->find(
             'all',
             array(
@@ -97,7 +95,6 @@ class CommentsController extends AppController
                 ),
             )
         );
-
         $this->set('result',$essay);
         $this->set('comments',$comments);
 
@@ -114,7 +111,8 @@ class CommentsController extends AppController
             $result = $this->Comment->save($this->data);
             if($result)
             {
-                $this->redirect('comm?id='.$essay_id);
+                $this->redirect('comm?id=' .$essay_id);
+
             }
             else
                 {

@@ -20,12 +20,12 @@ class Essay extends AppModel
         )
     );
 
-/*    public $hasMany = array(
-        "Comment" => array(
-            'className' => "Comment",
-            'foreignKey' => 'essay_id',
-        )
-    );*/
+//    public $hasMany = array(
+//        "Comment" => array(
+//            'className' => "Comment",
+//            'foreignKey' => 'essay_id',
+//        )
+//    );
 
 
 }

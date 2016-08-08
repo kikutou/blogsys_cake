@@ -43,12 +43,11 @@ echo "<tr>";
     <?php
     if($comments)
     {
-        foreach ($comments as $record){
-            $comment = $record['Comment'];
+        foreach ($comments as $comment){
             echo "<tr>";
-            echo "<td>" .$comment['date']. "</td>";
-            echo "<td>" .$comment['user_id']. "</td>";
-            echo "<td>" .$comment['comment']. "</td>";
+            echo "<td>" .$comment['Comment']['date']. "</td>";
+            echo "<td>" .$comment['User']['name']. "</td>";
+            echo "<td>" .$comment['Comment']['comment']. "</td>";
             echo "</tr>";
         }
     }

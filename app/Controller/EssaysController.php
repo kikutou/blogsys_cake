@@ -4,7 +4,7 @@ class EssaysController extends AppController
 {
 
     public $uses = array('User','Essay','Comment');
-
+    public $layout = false;
     public function beforeFilter()
     {
        $this->Auth->allow('index');
@@ -14,7 +14,13 @@ class EssaysController extends AppController
 
     public function index()
     {
-        $essays = $this->Essay->find('all');
+        $essays = $this->Essay->find(
+            'all',
+            array(
+                'conditions'=>array(
+                    'Essay.delete_flag'=>'0'
+                )
+            ));
         $this->set('essays',$essays);
 
         if($this->Auth->user('id'))
@@ -31,7 +37,8 @@ class EssaysController extends AppController
             'all',
             array(
                 'conditions'=>array(
-                    'Essay.user_id'=>$this->Auth->user('id')
+                    'Essay.user_id'=>$this->Auth->user('id'),
+                    'Essay.delete_flag'=>'0'
                 )
             )
         );
@@ -40,7 +47,8 @@ class EssaysController extends AppController
             'first',
             array(
                 'conditions'=>array(
-                    'User.id'=>$this->Auth->user('id')
+                    'User.id'=>$this->Auth->user('id'),
+                    'User.delete_flag'=>'0'
                 )
             )
         );
@@ -80,10 +88,16 @@ class EssaysController extends AppController
             'first',
             array(
                 'conditions'=>array(
-                    'Essay.id'=>$essay_id
+                    'Essay.id'=>$essay_id,
+                    'Essay.delete_flag'=>'0'
                 )
             )
         );
+
+//        print'<pre>';
+//        print_r($essay);
+//        print '</pre>';
+//        exit();
         //文件存在，取文件信息set到前台
         if($essay){
             $this->set('result',$essay);
@@ -92,8 +106,14 @@ class EssaysController extends AppController
 
         if ($this->request->ispost())
         {
-            $essay_id = $this->request->data['Essay']['id'];
-            $result = $this->Essay->delete($essay_id);
+            $delete_data = $this->request->data['Essay'];
+
+            json_decode($delete_data);
+
+            //$this->Essay->id = $this->request->data['Essay']['id'];
+            $this->Essay->id = $delete_data['id'];
+           // $essay_id = $this->request->data['Essay']['id'];
+            $result = $this->Essay->saveField('delete_flag','1');
             if (isset($result))
             {
                 $this->redirect('mypage');
@@ -102,7 +122,9 @@ class EssaysController extends AppController
             {
                 $errorMsg = 'データベースに削除できませんでした。';
             }
+//            return;
         }
+
         $this->set('errorMsg', $errorMsg);
 
 
@@ -124,7 +146,8 @@ class EssaysController extends AppController
                 'first',
                 array(
                     'conditions'=>array(
-                        'Essay.id'=>$essay_id
+                        'Essay.id'=>$essay_id,
+                        'Essay.delete_flag'=>'0'
                     )
                 )
             );
@@ -172,7 +195,8 @@ class EssaysController extends AppController
                 'first',
                 array(
                     'conditions'=>array(
-                        'Essay.id'=>$essay_id
+                        'Essay.id'=>$essay_id,
+                        'Essay.delete_flag'=>'0'
                     )
                 )
             );
