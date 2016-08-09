@@ -96,33 +96,12 @@ class User extends AppModel
     }
 
 
-
-    /**
-     * @param $data
-     * @return bool
-     *
-     * ログイン機能
-     */
-//    public function login($data)
-//    {
-//        //入力領域が空の場合、ログイン失敗
-//        if(!$data['User']['name'] || !$data['User']['password']){
-//            return false;
-//        }
-//
-//        $user = $this->find(
-//            'first',
-//            array(
-//                'conditions' => array(
-//                    'User.name' => $data['User']['name'],
-//                    'User.password' => $data['User']['password']
-//                )
-//            )
-//        );
-//
-//        return $user;
-//
-//    }
+//    public $hasMany = array(
+//        "Essay" => array(
+//            "className" => "Essay",
+//            "foreignKey" => "user_id",
+//        )
+//    );
 
 
 }

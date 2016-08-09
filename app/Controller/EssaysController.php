@@ -14,13 +14,46 @@ class EssaysController extends AppController
 
     public function index()
     {
-        $essays = $this->Essay->find(
-            'all',
-            array(
-                'conditions'=>array(
-                    'Essay.delete_flag'=>'0'
-                )
-            ));
+        $sql = "SELECT users.id, users.name, COUNT(essays.id) AS count
+                FROM users, essays WHERE users.id=essays.user_id AND users.delete_flag=0 AND                     essays.delete_flag=0 GROUP BY users.id;";
+        $return = $this->User->query($sql);
+
+
+
+//        $users = $this->User->find(
+//            'all',
+//            array(
+//                'conditions'=>array(
+//                    'User.delete_flag'=>'0'
+//                )
+//            ));
+//
+//        foreach($users as $a){
+//            $essays = $this->Esss->find(
+//                'all',
+//                array(
+//                    'conditions'=>array(
+//                        'User.delete_flag'=>'0',
+//
+//                    )
+//                ));
+//
+//        }
+
+
+
+
+//        $essays = $this->Essay->find(
+//            'all',
+//            array(
+//                'conditions'=>array(
+//                    'Essay.delete_flag'=>'0'
+//                )
+//            ));
+//        print '<pre>';
+//        print_r($essays);
+//        print '</pre>';
+//        exit();
         $this->set('essays',$essays);
 
         if($this->Auth->user('id'))

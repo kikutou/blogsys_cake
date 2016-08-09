@@ -1,14 +1,24 @@
 <h1>文章の一覧</h1>
 <table>
+    <div class="demo" id="highcharts">
+        <input type = "button" value = "图" onclick = "highcharts_js()">
+    </div>
   <tr>
       <th>发表时间</th>
       <th>文章标题</th>
       <th>文章详细</th>
       <th>文章评论</th>
   </tr>
+
   <?php
+
     if($essays)
     {
+        print '<pre>';
+        print_r($essays);
+        print '</pre>';
+        exit();
+
         foreach ($essays as $record){
             $essay = $record['Essay'];
             echo "<tr>";
