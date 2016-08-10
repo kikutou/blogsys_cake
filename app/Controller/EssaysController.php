@@ -7,7 +7,8 @@ class EssaysController extends AppController
     //public $layout = false;
     public function beforeFilter()
     {
-       $this->Auth->allow('index');
+        $this->Auth->allow('index');
+        $this->Auth->allow('ajax_index');
     }
 
 
