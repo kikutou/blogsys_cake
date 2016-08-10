@@ -20,6 +20,36 @@
 
             //定义画布周围空白的地方
             var padding = {left: 30, right: 30, top: 20, bottom: 20};
+
+            //ajax请求
+            $.ajax({
+                url: 'ajax_index',
+                type: 'post',
+                //data: {id: essay_id},
+                //dataType: 'text',
+                success: function (result) {
+                    //alert(typeof result);
+                    users = JSON.parse(result);
+
+                    //var user = users[0]['User']['id'];
+
+                    //取所有用户名
+                    var name_list = [];
+                    for (var i = 0; i < users.length; i++) {
+                        name_list[i] = users[i]['User']['name'];
+                    }
+                    alert(name_list);
+
+                    //取所有用户的文件数
+                    var essay_num = [];
+                    for (var i = 0; i < users.length; i++) {
+                        essay_num[i] = users[i]['User']['essay_num'];
+                    }
+                    alert(essay_num);
+                }
+            });
+
+
             //定义一个数组
             var dataset = [10, 20, 30, 40, 30, 20, 10, 5];
             //x轴的比例尺

@@ -12,43 +12,60 @@ class EssaysController extends AppController
 
 
 
+    public function ajax_index()
+    {
+        $this->autoRender = false;
+        if($this->request->is('ajax'))
+        {
+            //通过userModel查找userid与username
+            $users = $this->User->find(
+                'all',
+                array(
+                    'conditions' => array(
+                        'User.delete_flag' => 0,
+                    ),
+                    'fields' => array(
+                        'User.id',
+                        'User.name'
+                    ),
+                )
+            );
+            //数组中添加元素
+            //$essays_arr = array();
+            //$essays_arr[] = $essays_num;
+            //向数组$userInfo,添加$userInfo['essay_num'] = $essays_num元素.
+            foreach ($users as &$user){
+                $userInfo = &$user['User'];
+                $user_id = $user['User']['id'];
+                //相同user的文章数.
+                $essays_num = $this->Essay->find(
+                    'count',
+                    array(
+                        'conditions' => array(
+                            'Essay.user_id' => $user_id,
+                            'Essay.delete_flag' => 0,
+                        )
+                    )
+                );
+                $userInfo['essay_num'] = $essays_num;
+            }
+
+//            print '<pre>';
+//            print_r($users);
+//            print '</pre>';
+//            exit();
+            return json_encode($users);
+
+        }
+    }
+
+
     public function index()
     {
+        //查找userid,username,与userde文章数.
         /*$sql = "SELECT users.id, users.name, COUNT(essays.id) AS count
                 FROM users, essays WHERE users.id=essays.user_id AND users.delete_flag=0 AND                     essays.delete_flag=0 GROUP BY users.id;";
         $return = $this->User->query($sql);*/
-        $users = $this->User->find(
-            'all',
-            array(
-                'conditions' => array(
-                    'User.delete_flag' => 0,
-                ),
-                'fields' => array(
-                    'User.id',
-                    'User.name'
-                ),
-            )
-        );
-
-        $essays_arr = array();
-
-        foreach ($users as &$user){
-            $userInfo = &$user['User'];
-            $user_id = $user['User']['id'];
-
-            $essays_num = $this->Essay->find(
-                'count',
-                array(
-                    'conditions' => array(
-                        'Essay.user_id' => $user_id,
-                        'Essay.delete_flag' => 0,
-                    )
-                )
-            );
-
-            $essays_arr[] = $essays_num;
-            $userInfo['essay_num'] = $essays_num;
-        }
 
         $essays = $this->Essay->find(
             'all',
