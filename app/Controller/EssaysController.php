@@ -8,6 +8,7 @@ class EssaysController extends AppController
     public function beforeFilter()
     {
         $this->Auth->allow('index');
+        $this->Auth->allow('ajax_mypage');
         $this->Auth->allow('ajax_index');
     }
 
@@ -87,8 +88,85 @@ class EssaysController extends AppController
 
 
 
+
+
+    public function ajax_mypage()
+    {
+        $this->autoRender = false;
+
+        if($this->request->is('ajax'))
+        {
+            $essays = $this->Essay->find(
+                'all',
+                array(
+                    'conditions' => array(
+                        'Essay.user_id' => $this->Auth->user('id'),
+                        'Essay.delete_flag' => '0'
+                    ),
+                    'fields' => array(
+                        'Essay.id',
+                        'Essay.title'
+                    ),
+                )
+            );
+
+            foreach ($essays as &$essay){
+                $essayInfo = &$essay['Essay'];
+                $essay_id = $essay['Essay']['id'];
+                //相同user的文章数.
+                $comment_num = $this->Comment->find(
+                    'count',
+                    array(
+                        'conditions' => array(
+                            'Comment.essay_id' => $essay_id,
+                            'Comment.delete_flag' => 0,
+                        )
+                    )
+                );
+                $essayInfo['comment_num'] = $comment_num;
+            }
+            return json_encode($essays);
+        }
+    }
+
+
     public function mypage()
     {
+
+
+
+        $essays = $this->Essay->find(
+            'all',
+            array(
+                'conditions' => array(
+                    'Essay.user_id' => $this->Auth->user('id'),
+                    'Essay.delete_flag' => '0'
+                ),
+                'fields' => array(
+                    'Essay.id',
+                    'Essay.title'
+                ),
+            )
+        );
+
+        foreach ($essays as &$essay){
+            $essayInfo = &$essay['Essay'];
+            $essay_id = $essay['Essay']['id'];
+            //相同user的文章数.
+            $comment_num = $this->Comment->find(
+                'count',
+                array(
+                    'conditions' => array(
+                        'Comment.essay_id' => $essay_id,
+                        'Comment.delete_flag' => 0,
+                    )
+                )
+            );
+            $essayInfo['comment_num'] = $comment_num;
+        }
+
+
+
         $essays = $this->Essay->find(
             'all',
             array(
@@ -108,9 +186,11 @@ class EssaysController extends AppController
                 )
             )
         );
-            $this->set('user',$user);
-            $this->set('essays',$essays);
+        $this->set('user',$user);
+        $this->set('essays',$essays);
     }
+
+
 
 
 
