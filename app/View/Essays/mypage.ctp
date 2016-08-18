@@ -1,3 +1,52 @@
+<div id="pic">
+
+</div>
+
+<script>
+
+    $(
+        function(){
+            //ajax请求
+
+            $.ajax({
+
+                url: 'ajax_index',
+                type: 'post',
+                success: function (result) {
+                    essays = JSON.parse(result);
+                    alert(essays);
+
+                    //取所有用户名
+                    var essay_list = [];
+                    for (var i = 0; i < essays.length; i++) {
+                        essay_list[i] = essays[i]['Essay']['title'];
+                    }
+                    alert(essay_list);
+
+                    //取所有用户的文件数
+                    var comment_num = [];
+                    for (var i = 0; i < essays.length; i++) {
+                        comment_num[i] = essays[i]['Essay']['comment_num'];
+                    }
+                    alert(comment_num);
+
+                },
+
+                error: function (error) {
+                    alert('エラーが発生しました。');
+                }
+            });
+        }
+    );
+
+
+
+
+
+</script>
+
+
+
 
 <h1>自己紹介</h1>
 
