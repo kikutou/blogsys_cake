@@ -7,6 +7,7 @@ class UsersController extends AppController
     {
         $this->Auth->allow('login');
         $this->Auth->allow('signup');
+        $this->Auth->allow('testPassword');
     }
 
 
@@ -90,6 +91,45 @@ class UsersController extends AppController
     }
 
 
+    public function testPassword(){
+
+        //①passwordがから
+        $this->data = array(
+            'User' => array(
+                'password' => null,
+            )
+        );
+
+        $result = $this->User->save($this->data);
+
+        print '<pre>';
+        print 'passwordがなしの時の結果：';
+        print_r($this->User->validationErrors['password']['0'] == '１−6文字以内で入力してください。');
+        print '</pre>';
+
+
+
+        //①passwordがから
+        $this->data = array(
+            'User' => array(
+                'password' => '12345678',
+            )
+        );
+
+        $result = $this->User->save($this->data);
+
+        print '<pre>';
+        print 'passwordが7位以上の時の結果：';
+        print_r($this->User->validationErrors['password']['0'] == '１−6文字以内で入力してください。');
+        print '</pre>';
+
+
+        exit();
+
+
+    }
+
+
 
 
 
@@ -164,6 +204,8 @@ class UsersController extends AppController
 //        }
 //        $this->set('errorMsg',$errorMsg);
 //    }
+
+
 
 
 
