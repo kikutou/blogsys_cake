@@ -17,23 +17,16 @@
                 success: function (result) {
                     //alert(typeof result);
                     users = JSON.parse(result);
-
-                    //var user = users[0]['User']['id'];
-
                     //取所有用户名
                     var name_list = [];
                     for (var i = 0; i < users.length; i++) {
                         name_list[i] = users[i]['User']['name'];
                     }
-                    alert(name_list);
-
                     //取所有用户的文件数
                     var essay_num = [];
                     for (var i = 0; i < users.length; i++) {
                         essay_num[i] = users[i]['User']['essay_num'];
                     }
-                    alert(essay_num);
-
                     show_graph(essay_num, name_list);
                 },
                 error: function (error) {
@@ -64,7 +57,6 @@
             .rangeBands([0, width - padding.left - padding.right]);
 
         //y轴的比例尺
-        alert([0, d3.max(dataset)]);
         var yScale = d3.scale.linear()
             .domain([0, d3.max(dataset)])
             .range([height - padding.top - padding.bottom, 0]);

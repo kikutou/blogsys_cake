@@ -8,9 +8,41 @@ class EssaysController extends AppController
     public function beforeFilter()
     {
         $this->Auth->allow('index');
-        $this->Auth->allow('ajax_mypage');
+        //$this->Auth->allow('ajax_mypage');
         $this->Auth->allow('ajax_index');
     }
+
+
+
+    /*
+     * function ajax_index()の詳細設計書：
+     *
+     * １、$this->autoRender = false 設定
+     * ２、ajax請求かとか確認
+     *      if($this->request->is('ajax')){
+     *          UserModel,EssayModelから$users arrayを作ります;fields:User.id,User.name,essay_num
+     *
+     *          (1)UserModelから$users arrayのUser.idとUser.name fieldsを検索する。
+     *              conditions:User.delete_flog = 0;
+     *              fields:User.id,User.name;
+     *          (2)foreach ($users as &$user),
+     *              $userInfo = &$user['User'];
+     *              $userInfoに$essays_num　fieldsを追加する。$userInfo['essay_num'] = $essays_num
+     *                  $essays_num = $this->Essay->find(
+                            'count',
+                            array(
+                                'conditions' => array(
+                                'Essay.user_id' => $user_id,
+                                'Essay.delete_flag' => 0,
+                                )
+                        );
+                ruturn json_encode($users);
+            }
+     *      else {
+     *          return errorMsg
+     *      }
+     *
+     * */
 
 
 
@@ -51,13 +83,7 @@ class EssaysController extends AppController
                 );
                 $userInfo['essay_num'] = $essays_num;
             }
-
-//            print '<pre>';
-//            print_r($users);
-//            print '</pre>';
-//            exit();
             return json_encode($users);
-
         }
     }
 
@@ -77,9 +103,7 @@ class EssaysController extends AppController
                 )
             )
         );
-
         $this->set('essays',$essays);
-
         if($this->Auth->user('id'))
         {
             $this->set('user','$this->Auth->user(\'id\')');
@@ -93,7 +117,6 @@ class EssaysController extends AppController
     public function ajax_mypage()
     {
         $this->autoRender = false;
-
         if($this->request->is('ajax'))
         {
             $essays = $this->Essay->find(
@@ -106,20 +129,20 @@ class EssaysController extends AppController
                     'fields' => array(
                         'Essay.id',
                         'Essay.title'
-                    ),
+                    )
                 )
             );
-
             foreach ($essays as &$essay){
                 $essayInfo = &$essay['Essay'];
                 $essay_id = $essay['Essay']['id'];
+
                 //相同user的文章数.
                 $comment_num = $this->Comment->find(
                     'count',
                     array(
                         'conditions' => array(
                             'Comment.essay_id' => $essay_id,
-                            'Comment.delete_flag' => 0,
+                            'Comment.delete_flag' => '0',
                         )
                     )
                 );
@@ -132,41 +155,6 @@ class EssaysController extends AppController
 
     public function mypage()
     {
-
-
-
-        $essays = $this->Essay->find(
-            'all',
-            array(
-                'conditions' => array(
-                    'Essay.user_id' => $this->Auth->user('id'),
-                    'Essay.delete_flag' => '0'
-                ),
-                'fields' => array(
-                    'Essay.id',
-                    'Essay.title'
-                ),
-            )
-        );
-
-        foreach ($essays as &$essay){
-            $essayInfo = &$essay['Essay'];
-            $essay_id = $essay['Essay']['id'];
-            //相同user的文章数.
-            $comment_num = $this->Comment->find(
-                'count',
-                array(
-                    'conditions' => array(
-                        'Comment.essay_id' => $essay_id,
-                        'Comment.delete_flag' => 0,
-                    )
-                )
-            );
-            $essayInfo['comment_num'] = $comment_num;
-        }
-
-
-
         $essays = $this->Essay->find(
             'all',
             array(
@@ -176,7 +164,6 @@ class EssaysController extends AppController
                 )
             )
         );
-
         $user = $this->User->find(
             'first',
             array(
@@ -217,11 +204,11 @@ class EssaysController extends AppController
     public function ajax_delete()
     {
         $this->autoRender = false;
-
+/*      与else作用一样
         $ajax_response = array(
             'response_code' => 2,
             'message' => '失敗しました。'
-        );
+        );*/
 
         if($this->request->is('ajax')) {
             $essay_id = $this->data['id'];
@@ -261,41 +248,23 @@ class EssaysController extends AppController
                 )
             )
         );
-
-//        print'<pre>';
-//        print_r($essay);
-//        print '</pre>';
-//        exit();
         //文件存在，取文件信息set到前台
         if($essay){
             $this->set('result',$essay);
         }
-
-
-        if ($this->request->ispost())
-        {
-            $delete_data = $this->request->data['Essay'];
-
-            json_decode($delete_data);
-
-            //$this->Essay->id = $this->request->data['Essay']['id'];
-            $this->Essay->id = $delete_data['id'];
-           // $essay_id = $this->request->data['Essay']['id'];
-            $result = $this->Essay->saveField('delete_flag','1');
-            if (isset($result))
+        $this->Essay->id = $this->request->data['Essay']['id'];
+        $this->Essay->id = $delete_data['id'];
+        $essay_id = $this->request->data['Essay']['id'];
+        $result = $this->Essay->saveField('delete_flag','1');
+        if (isset($result))
             {
                 $this->redirect('mypage');
             }
-            else
+        else
             {
                 $errorMsg = 'データベースに削除できませんでした。';
             }
-//            return;
-        }
-
         $this->set('errorMsg', $errorMsg);
-
-
     }*/
 
 

@@ -7,31 +7,23 @@
     $(
         function(){
             //ajax请求
-
             $.ajax({
-
-                url: 'ajax_index',
+                url: 'ajax_mypage',
                 type: 'post',
                 success: function (result) {
                     essays = JSON.parse(result);
-                    alert(essays);
-
                     //取所有用户名
                     var essay_list = [];
                     for (var i = 0; i < essays.length; i++) {
                         essay_list[i] = essays[i]['Essay']['title'];
                     }
-                    alert(essay_list);
-
                     //取所有用户的文件数
                     var comment_num = [];
                     for (var i = 0; i < essays.length; i++) {
                         comment_num[i] = essays[i]['Essay']['comment_num'];
                     }
-                    alert(comment_num);
-
+                    show_graph(comment_num, essay_list);
                 },
-
                 error: function (error) {
                     alert('エラーが発生しました。');
                 }
@@ -39,10 +31,93 @@
         }
     );
 
+    function show_graph(dataset, nameset){
+        //确定画布的大小
+        var width = 800;
+        var height = 400;
+        //在 body 里添加一个 SVG 画布
+        var svg = d3.select("#pic")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
 
+        //定义画布周围空白的地方
+        var padding = {left: 30, right: 30, top: 20, bottom: 20};
 
+        //x轴的比例尺
+        var xScale = d3.scale.ordinal()
+        //.domain(d3.range(dataset.length))
+            .domain(nameset)
+            //.rangeRoundBands([0, width - padding.left - padding.right]);
+            .rangeBands([0, width - padding.left - padding.right]);
 
-
+        //y轴的比例尺
+        var yScale = d3.scale.linear()
+            .domain([0, d3.max(dataset)])
+            .range([height - padding.top - padding.bottom, 0]);
+        //定义x轴
+        var xAxis = d3.svg.axis()
+            .scale(xScale)
+            .orient("bottom");
+        //定义y轴
+        var yAxis = d3.svg.axis()
+            .scale(yScale)
+            .orient("left");
+        //矩形之间的空白
+        var rectPadding = 4;
+        //添加矩形元素
+        var rects = svg.selectAll(".MyRect")
+            .data(dataset)
+            .enter()
+            .append("rect")
+            .attr("class", "MyRect")
+            .attr("fill", "steelblue")
+            .attr("transform", "translate(" + padding.left + "," + padding.top + ")")
+            .attr("x", function (d, i) {
+                return xScale(nameset[i]) + rectPadding / 2;
+            })
+            .attr("y", function (d) {
+                return yScale(d);
+            })
+            .attr("width", xScale.rangeBand() - rectPadding)
+            .attr("height", function (d) {
+                return height - padding.top - padding.bottom - yScale(d);
+            });
+        //添加文字元素
+        var texts = svg.selectAll(".MyText")
+            .data(dataset)
+            .enter()
+            .append("text")
+            .attr("class", "MyText")
+            .attr("fill", "white")
+            .attr("text-anchor", "middle")
+            .attr("transform", "translate(" + padding.left + "," + padding.top + ")")
+            .attr("x", function (d, i) {
+                return xScale(nameset[i]) + rectPadding / 2;
+            })
+            .attr("y", function (d) {
+                return yScale(d);
+            })
+            .attr("dx", function () {
+                return (xScale.rangeBand() - rectPadding) / 2;
+            })
+            .attr("dy", function (d) {
+                return 20;
+            })
+            .text(function (d) {
+                return d;
+            });
+        //添加x轴
+        svg.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(" + padding.left + "," + (height - padding.bottom) + ")")
+            .call(xAxis);
+        //添加y轴
+        svg.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(" + padding.left + "," + padding.top + ")")
+            .call(yAxis);
+    }
 </script>
 
 
@@ -170,32 +245,34 @@
 
 
 <script>
-    $(function () {
-        $(".del").click(function () {
-            var essay_id = $(this).text().replace("削除", "");
-            if (window.confirm('文章を削除しすか？')){
-                $.ajax({
-                    url: 'ajax_delete',
-                    type: 'post',
-                    data: {id: essay_id},
-                    dataType: 'text',
-                    success: function (result) {
-                        result = JSON.parse(result);
-                        if(result['response_code'] == 1){
-                            alert(result['message']);
-                            location.reload();
-                        }else{
-                            alert(result['message']);
-                        }
+    $(
+        function () {
+            $(".del").click(function () {
+                var essay_id = $(this).text().replace("削除", "");
+                if (window.confirm('文章を削除しすか？')){
+                    $.ajax({
+                        url: 'ajax_delete',
+                        type: 'post',
+                        data: {id: essay_id},
+                        dataType: 'text',
+                        success: function (result) {
+                            result = JSON.parse(result);
+                            if(result['response_code'] == 1){
+                                alert(result['message']);
+                                location.reload();
+                            }else{
+                                alert(result['message']);
+                            }
 
-                    },
-                    error: function (error) {
-                        alert('ajax error');
-                    }
-                })
-            }
-        })
-    })
+                        },
+                        error: function (error) {
+                            alert('ajax error');
+                        }
+                    })
+                }
+            })
+        }
+    )
 
 </script>
 
